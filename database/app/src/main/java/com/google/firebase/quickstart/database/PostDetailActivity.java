@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.quickstart.database.models.User;
 import com.google.firebase.quickstart.database.models.Comment;
 import com.google.firebase.quickstart.database.models.Post;
+import com.google.firebase.quickstart.database.models.Scan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private String mPostKey;
     private CommentAdapter mAdapter;
 
-    private TextView mAuthorView;
-    private TextView mTitleView;
+    private TextView mFirebaseIdView;
+    private TextView mWorkerIdView;
     private TextView mBodyView;
     private EditText mCommentField;
     private Button mCommentButton;
@@ -58,20 +59,20 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         // Initialize Database
         mPostReference = FirebaseDatabase.getInstance().getReference()
-                .child("posts").child(mPostKey);
-        mCommentsReference = FirebaseDatabase.getInstance().getReference()
-                .child("post-comments").child(mPostKey);
+                .child("scans");
+        //mCommentsReference = FirebaseDatabase.getInstance().getReference()
+        //       .child("post-comments").child(mPostKey);
 
         // Initialize Views
-        mAuthorView = (TextView) findViewById(R.id.post_author);
-        mTitleView = (TextView) findViewById(R.id.post_title);
+        mFirebaseIdView = (TextView) findViewById(R.id.post_author);
+        mWorkerIdView = (TextView) findViewById(R.id.post_title);
         mBodyView = (TextView) findViewById(R.id.post_body);
-        mCommentField = (EditText) findViewById(R.id.field_comment_text);
-        mCommentButton = (Button) findViewById(R.id.button_post_comment);
-        mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
+        //mCommentField = (EditText) findViewById(R.id.field_comment_text);
+        //mCommentButton = (Button) findViewById(R.id.button_post_comment);
+        //mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
 
-        mCommentButton.setOnClickListener(this);
-        mCommentsRecycler.setLayoutManager(new LinearLayoutManager(this));
+        //mCommentButton.setOnClickListener(this);
+        //mCommentsRecycler.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -85,11 +86,12 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                Post post = dataSnapshot.getValue(Post.class);
+                //Post post = dataSnapshot.getValue(Post.class);
+                Scan scan = dataSnapshot.getValue(Scan.class);
                 // [START_EXCLUDE]
-                mAuthorView.setText(post.author);
-                mTitleView.setText(post.title);
-                mBodyView.setText(post.body);
+                //mFirebaseIdView.setText(scan.firebaseId);
+                mWorkerIdView.setText(scan.workerid);
+                //mBodyView.setText(post.body);
                 // [END_EXCLUDE]
             }
 
@@ -110,8 +112,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         mPostListener = postListener;
 
         // Listen for comments
-        mAdapter = new CommentAdapter(this, mCommentsReference);
-        mCommentsRecycler.setAdapter(mAdapter);
+        //mAdapter = new CommentAdapter(this, mCommentsReference);
+        //mCommentsRecycler.setAdapter(mAdapter);
     }
 
     @Override
@@ -124,7 +126,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
 
         // Clean up comments listener
-        mAdapter.cleanupListener();
+        //mAdapter.cleanupListener();
     }
 
     @Override
