@@ -16,20 +16,16 @@
 
 package com.google.firebase.quickstart.database;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.quickstart.database.fragment.MyPostsFragment;
-import com.google.firebase.quickstart.database.fragment.MyTopPostsFragment;
-import com.google.firebase.quickstart.database.fragment.RecentPostsFragment;
+import com.google.firebase.quickstart.database.fragment.PhotoFragment;
+import com.google.firebase.quickstart.database.fragment.RecentScansFragment;
+import com.google.firebase.quickstart.database.fragment.SiteScanFragment;
 
 public class  MainActivity extends BaseActivity {
 
@@ -46,15 +42,16 @@ public class  MainActivity extends BaseActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new RecentPostsFragment(),
-                    new MyPostsFragment(),
-                    new MyTopPostsFragment(),
+                    new RecentScansFragment(),
+                    new SiteScanFragment(),
+                    new PhotoFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     getString(R.string.heading_recent),
                     getString(R.string.heading_my_posts),
                     getString(R.string.heading_my_top_posts)
             };
+
             @Override
             public Fragment getItem(int position) {
                 return mFragments[position];
@@ -75,13 +72,15 @@ public class  MainActivity extends BaseActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         // Button launches NewPostActivity
-        findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-            }
-        });
+//        findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+//            }
+//        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,17 +88,17 @@ public class  MainActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int i = item.getItemId();
-        if (i == R.id.action_logout) {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int i = item.getItemId();
+//        if (i == R.id.action_logout) {
+//            FirebaseAuth.getInstance().signOut();
+//            startActivity(new Intent(this, SignInActivity.class));
+//            finish();
+//            return true;
+//        } else {
+//            return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 }

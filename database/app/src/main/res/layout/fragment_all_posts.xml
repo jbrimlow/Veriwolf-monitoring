@@ -15,4 +15,15 @@
         android:scrollbars="vertical"
         tools:listitem="@layout/item_post" />
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/actionButton"
+        android:layout_alignBottom="@+id/container"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right"
+        android:visibility="invisible" />
 </FrameLayout>

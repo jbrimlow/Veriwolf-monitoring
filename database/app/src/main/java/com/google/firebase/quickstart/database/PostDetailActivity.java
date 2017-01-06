@@ -60,19 +60,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         // Initialize Database
         mPostReference = FirebaseDatabase.getInstance().getReference()
                 .child("scans");
-        //mCommentsReference = FirebaseDatabase.getInstance().getReference()
-        //       .child("post-comments").child(mPostKey);
 
         // Initialize Views
         mFirebaseIdView = (TextView) findViewById(R.id.post_author);
         mWorkerIdView = (TextView) findViewById(R.id.post_title);
         mBodyView = (TextView) findViewById(R.id.post_body);
-        //mCommentField = (EditText) findViewById(R.id.field_comment_text);
-        //mCommentButton = (Button) findViewById(R.id.button_post_comment);
-        //mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
-
-        //mCommentButton.setOnClickListener(this);
-        //mCommentsRecycler.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
