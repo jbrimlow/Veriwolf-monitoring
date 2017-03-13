@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.48"
+        android:weightSum="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/imageView2"
+            android:maxHeight="120dp"
+            android:maxWidth="120dp"
+            android:minHeight="120dp"
+            android:minWidth="120dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="286dp"
+        android:weightSum="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contractorView"
+            android:longClickable="false"
+            android:layout_weight="0.05" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/dateView"
+            android:layout_weight="0.05" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/description"
+            android:id="@+id/descView"
+            android:layout_gravity="center_horizontal"
+            android:editable="true"
+            android:layout_weight="0.26"
+            android:allowUndo="false" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="16dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.31">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:id="@+id/doneButton" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
