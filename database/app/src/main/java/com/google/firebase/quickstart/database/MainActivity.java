@@ -16,16 +16,30 @@
 
 package com.google.firebase.quickstart.database;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.quickstart.database.fragment.PhotoFragment;
 import com.google.firebase.quickstart.database.fragment.RecentScansFragment;
 import com.google.firebase.quickstart.database.fragment.SiteScanFragment;
+import com.google.firebase.quickstart.database.models.Site;
+
+import java.util.ArrayList;
 
 public class  MainActivity extends BaseActivity {
 
@@ -33,6 +47,10 @@ public class  MainActivity extends BaseActivity {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
+    public int site;
+    public ArrayList<String> siteList;
+    public DatabaseReference mainDatabase;
+    public Query siteQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +59,12 @@ public class  MainActivity extends BaseActivity {
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            private final Fragment[] mFragments = new Fragment[] {
+            private final Fragment[] mFragments = new Fragment[]{
                     new RecentScansFragment(),
                     new SiteScanFragment(),
                     new PhotoFragment(),
             };
-            private final String[] mFragmentNames = new String[] {
+            private final String[] mFragmentNames = new String[]{
                     getString(R.string.heading_recent),
                     getString(R.string.heading_my_posts),
                     getString(R.string.heading_my_top_posts)
@@ -56,30 +74,46 @@ public class  MainActivity extends BaseActivity {
             public Fragment getItem(int position) {
                 return mFragments[position];
             }
+
             @Override
             public int getCount() {
                 return mFragments.length;
             }
+
             @Override
             public CharSequence getPageTitle(int position) {
                 return mFragmentNames[position];
             }
         };
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // Button launches NewPostActivity
-//        findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-//            }
-//        });
-    }
+        //set up list of sites
+        mainDatabase = FirebaseDatabase.getInstance().getReference();
+        siteQuery = mainDatabase.child("sites");
+        siteList = new ArrayList<>();
+        siteQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot siteSnapshot : dataSnapshot.getChildren()) {
+                    Site site = siteSnapshot.getValue(Site.class);
+                    siteList.add(site.getName());
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //do nothing
+            }
+        });
+
+
+    }
 
 
     @Override
@@ -88,17 +122,29 @@ public class  MainActivity extends BaseActivity {
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int i = item.getItemId();
-//        if (i == R.id.action_logout) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.action_logout) {
 //            FirebaseAuth.getInstance().signOut();
 //            startActivity(new Intent(this, SignInActivity.class));
 //            finish();
+            return true;
+        }
+//        else if (i == R.id.action_site) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle("Choose Site");
+//            builder.setSingleChoiceItems(siteList.toArray(), site, new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                }
+//            });
 //            return true;
-//        } else {
-//            return super.onOptionsItemSelected(item);
 //        }
-//    }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
